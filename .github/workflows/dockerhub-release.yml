@@ -28,6 +28,6 @@ jobs:
       - name: Re-tag dev images
         run: |
           docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine -t ${{ env.IMAGE_NAME }}:alpine
-          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-ubuntu -t ${{ env.IMAGE_NAME }}:latest
+          docker buildx imagetools create ${{ env.IMAGE_NAME }}:dev-alpine -t ${{ env.IMAGE_NAME }}:latest
       - name: Logout from Docker Hub
         run: docker logout
