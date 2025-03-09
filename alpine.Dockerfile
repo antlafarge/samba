@@ -19,4 +19,4 @@ RUN apk update \
 EXPOSE 445 137 138 139 1512
 
 ENTRYPOINT ["smbd"]
-CMD ["--foreground", "--no-process-group", "--debuglevel=10", "--debug-stdout", "2>&1"]
+CMD ["--foreground", "--no-process-group", "--debuglevel=10", "--debug-stdout"]
