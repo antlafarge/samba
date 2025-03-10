@@ -1,10 +1,27 @@
 SAMBA
 =====
 
-# Run
+# Docker
+
+```yml
+services:
+    samba:
+        image: antlafarge/samba:latest
+        name: samba
+        volumes:
+            /home/MyUser/:/home/MyUser/
+            /hdd/:/hdd/
+            /storage/:/storage/
+        ports:
+            445:445/tcp
+            137:137/udp
+            138:138/udp
+            139:139/tcp
+            1512:1512/udp
+```
 
 ```bash
-docker run -d -v /hdd/:/hdd/ -v /storage/:/storage/ -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:alpine
+docker run -d -v /home/MyUser/:/home/MyUser/ -v /hdd/:/hdd/ -v /storage/:/storage/ -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:alpine
 
 docker run -d -v /hdd/:/hdd/ -v /storage/:/storage/ -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:dev-alpine
 
@@ -19,5 +36,5 @@ docker run --rm -it -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp 
 
 ```bash
 cd samba
-docker build -t samba:alpine -f alpine.Dockerfile .
+docker build -t samba:dev-alpine -f alpine.Dockerfile .
 ```
