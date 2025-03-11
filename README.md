@@ -8,7 +8,7 @@ services:
     samba:
         image: antlafarge/samba:latest
         container_name: samba
-        restart: unless-stopped
+        restart: on-failure:3
         volumes:
             - /home/MyUser/:/home/MyUser/
             - /hdd/:/hdd/
@@ -30,15 +30,45 @@ networks:
 ```
 
 ```bash
-docker run -d -v /home/MyUser/:/home/MyUser/ -v /hdd/:/hdd/ -v /storage/:/storage/ -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:alpine
+# Normal
+docker run -d \
+    -v /home/MyUser/:/home/MyUser/ \
+    -v /hdd/:/hdd/ \
+    -v /storage/:/storage/ \
+    -p 445:445/tcp \
+    -p 137:137/udp \
+    -p 138:138/udp \
+    -p 139:139/tcp \
+    -p 1512:1512/udp \
+    --name samba \
+    antlafarge/samba:alpine
 
-docker run -d -v /hdd/:/hdd/ -v /storage/:/storage/ -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:dev-alpine
+# Override entrypoint arguments (enable log debug level 10)
+docker run -d \
+    -v /home/MyUser/:/home/MyUser/ \
+    -v /hdd/:/hdd/ \
+    -v /storage/:/storage/ \
+    -p 445:445/tcp \
+    -p 137:137/udp \
+    -p 138:138/udp \
+    -p 139:139/tcp \
+    -p 1512:1512/udp \
+    --name samba \
+    antlafarge/samba:dev-alpine --foreground --no-process-group --debug-stdout --debuglevel=10
 
-docker run --rm -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:dev-alpine
-
-docker run --rm -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba antlafarge/samba:dev-alpine --foreground --no-process-group  --debug-stdout --debuglevel=3
-
-docker run --rm -it -p 445:445/tcp -p 137:137/udp -p 138:138/udp -p 139:139/tcp -p 1512:1512/udp --name samba --entrypoint sh antlafarge/samba:dev-alpine
+# Override entrypoint (sh)
+docker run -d \
+    -v /home/MyUser/:/home/MyUser/ \
+    -v /hdd/:/hdd/ \
+    -v /storage/:/storage/ \
+    -p 445:445/tcp \
+    -p 137:137/udp \
+    -p 138:138/udp \
+    -p 139:139/tcp \
+    -p 1512:1512/udp \
+    --name samba \
+    --entrypoint sh \
+    antlafarge/samba:dev-alpine
 ```
 
 # Build
