@@ -7,10 +7,10 @@ LABEL dockerhub="https://hub.docker.com/r/antlafarge/samba" \
       maintainer.github="https://github.com/antlafarge" \
       maintainer.dockerhub="https://hub.docker.com/u/antlafarge"
 
-STOPSIGNAL SIGTERM
-
 ENV LANG='C.UTF-8'
 ENV LC_ALL='C.UTF-8'
+
+STOPSIGNAL SIGTERM
 
 RUN apk update \
  && apk -U upgrade \
